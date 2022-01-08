@@ -8,12 +8,12 @@ public class Staff implements Serializable {
     private String gender;
     private int age;
     private String gmail;
-    private long phoneNumber;
+    private String phoneNumber;
     private String address;
     private String status;
     private double salary;
 
-    public Staff(String name, int age, long phoneNumber, String address, String gmail, String status, double salary) {
+    public Staff(String name, int age, String phoneNumber, String address, String gmail, String status, double salary) {
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
@@ -63,11 +63,11 @@ public class Staff implements Serializable {
         this.gmail = gmail;
     }
 
-    public long getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(long phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -108,5 +108,8 @@ public class Staff implements Serializable {
                 ", status='" + status + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+    public String staffType(){
+        return "";
     }
 }

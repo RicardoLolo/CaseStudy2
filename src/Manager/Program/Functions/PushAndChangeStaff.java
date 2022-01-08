@@ -10,21 +10,67 @@ import Manager.Program.CheckFail.Gender;
 import Manager.Program.CheckFail.Id;
 import Manager.Program.Regex.Gmail;
 import Manager.Program.Regex.PhoneNumber;
+import Manager.Program.Sort.SortByType;
+import Manager.Program.Sort.SortDown;
+import Manager.Program.Sort.SortUp;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
-public class UpdateStaff {
-    private Scanner scanner = new Scanner(System.in);
-    private PushAndChangeStaff manager = new PushAndChangeStaff();
-    private ArrayList<Staff> list = manager.list;
-    private File file = new File("src/EmployeeStaff/staff.txt");
-    private PushAndChangeStaff manger = new PushAndChangeStaff();
-    private WriteFiles<Staff> writeFiles = new WriteFiles<>();
-    private ReadFiles<Staff> readFiles = new ReadFiles<>();
+public class PushAndChangeStaff {
+    Scanner scanner = new Scanner(System.in);
+    ReadFiles<Staff> readFiles = new ReadFiles<>();
+    WriteFiles<Staff> writeFiles = new WriteFiles<>();
+    ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
 
+    public void menuSort() {
+        System.out.println("------xắp xếp------");
+        System.out.println("1. Sắp xếp theo id từ thấp đến cao");
+        System.out.println("2. sắp xếp theo id từ cao xuống thấp");
+        System.out.println("3. Phân loại nhân viên");
+        System.out.println("4. Quay lại");
+        System.out.print("Nhập lựa chọn: ");
+        int choice = Integer.parseInt(scanner.nextLine());
+        switch (choice) {
+            case 1:
+                sortUp();
+                break;
+            case 2:
+                sortDown();
+                break;
+            case 3:
+                sortSaffByType();
+                break;
+            case 4:
+                break;
+        }
+    }
+
+    private void sortUp() {
+        ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
+        SortUp sortUp = new SortUp();
+        Collections.sort(list, sortUp);
+        readFiles.readFiles("src/Manager/StaffManagement.txt");
+    }
+
+    private void sortDown() {
+        ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
+        SortDown sortDown = new SortDown();
+        Collections.sort(list, sortDown);
+        readFiles.readFiles("src/Manager/StaffManagement.txt");
+    }
+
+    private void sortSaffByType() {
+        ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
+        SortByType sortByType = new SortByType();
+        Collections.sort(list, sortByType);
+        readFiles.readFiles("src/Manager/StaffManagement.txt");
+    }
+
+
+
+    //kiểm tra quyền điều khiển
     private void check(int check, String a, String b) {
         if (check > 0) {
             System.out.println(a);
@@ -33,7 +79,8 @@ public class UpdateStaff {
         }
     }
 
-    public Staff create(String KieuNv) {
+    //Hàm tạo kiểu nhân viên<fulltime and partime>
+    public Staff create(String staffType) {
         int id = getId();
         String name = getName();
         int age = getAge();
@@ -43,7 +90,7 @@ public class UpdateStaff {
         String status = getStatus();
         String gender = getGender();
         double salary = getSalary();
-        if (KieuNv.equals("full")) {
+        if (staffType.equals("full")) {
             return new StaffFullTime(id, name, gender, age, gmail, phonenumber, address, status, salary);
         } else {
             int hours = getHours();
@@ -51,73 +98,24 @@ public class UpdateStaff {
         }
     }
 
-    public void updateNhanVien(PushAndChangeStaff manager) {
-        ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
-        if (list.size() == 0){
-            System.out.println("list is empty");
-        } else {
-            System.out.print("Enter the id of the employee that needs to be corrected: ");
-            int id = Integer.parseInt(scanner.nextLine());
-            getStaffTemp(id);
-            int check = -1;
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getId() == id) {
-                    if (list.get(i) instanceof StaffFullTime) {
-                        list.set(i, create("full"));
-                        check = 1;
-                        writeFiles.writeFiles("src/Manager/StaffManagement.txt", list);
-                        break;
-                    } else {
-                        list.set(i, create("part"));
-                        check = 1;
-                        writeFiles.writeFiles("src/Manager/StaffManagement.txt", list);
-                        break;
-                    }
-                } else {
-                    check = -1;
-                }
-            }
-            check(check, "Update successful", "Staff not found");
-        }
+    //Thêm danh sách
+    public void addList(Staff staff) {
+        list.add(staff);
+        writeFiles.writeFiles("src/Manager/StaffManagement.txt", list);
     }
-
-    private void getStaffTemp(int id){
-        ArrayList<Staff> list = manager.list;
-        ArrayList<Staff> listtemp = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId() == id){
-                listtemp.set(0,list.get(i));
-                writeFiles.writeFiles("src/EmployeeStaff/staff.txt",listtemp);
-            }
-        }
-    }
-    public UpdateStaff(){
-        if (!file.exists()){
-            try {
-                file.createNewFile();
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-    }
-
 
     private String getGmail() {
-        ArrayList<Staff> listtemp1 = readFiles.readFiles("src/EmployeeStaff/staff.txt");
         while (true) {
             int check = -1;
-            Gmail gmail1 = new Gmail();
+            Gmail gmail = new Gmail();
             System.out.print("Enter gmail: ");
-            String gmail = scanner.nextLine();
-            if (gmail1.validate(gmail) == true) {
-                if (list.size() == 0) {
-                    return gmail;
-                } else if (listtemp1.get(0).getGmail().equals(gmail)) {
-                    return gmail;
-                }
-                else {
+            String Gmail = scanner.nextLine();
+            if (gmail.validate(Gmail) == true) {
+                if (list.size() == 0){
+                    return Gmail;
+                } else {
                     for (Staff a : list) {
-                        if (a.getGmail().equals(gmail)) {
+                        if (a.getGmail().equals(Gmail)) {
                             check = -1;
                             break;
                         } else {
@@ -125,7 +123,7 @@ public class UpdateStaff {
                         }
                     }
                     if (check > 0) {
-                        return gmail;
+                        return Gmail;
                     } else {
                         System.out.println("gmail is duplicate");
                     }
@@ -137,19 +135,15 @@ public class UpdateStaff {
     }
 
     private String getPhoneNumber() {
-        ArrayList<Staff> listtemp1 = readFiles.readFiles("src/EmployeeStaff/staff.txt");
         while (true) {
             int check = -1;
-            PhoneNumber phoneNumber1 = new PhoneNumber();
+            PhoneNumber phoneNumber = new PhoneNumber();
             System.out.print("Enter phone number: ");
             String phonenumber = scanner.nextLine();
-            if (phoneNumber1.validate(phonenumber) == true) {
-                if (list.size() == 0) {
+            if (phoneNumber.validate(phonenumber) == true) {
+                if (list.size()==0){
                     return phonenumber;
-                } else if (listtemp1.get(0).getPhoneNumber().equals(phonenumber)){
-                    return phonenumber;
-                }
-                else {
+                }else {
                     for (Staff a : list) {
                         if (a.getPhoneNumber().equals(phonenumber)) {
                             check = -1;
@@ -157,10 +151,10 @@ public class UpdateStaff {
                             check = 1;
                         }
                     }
-                    if (check > 0) {
+                    if (check > 0){
                         return phonenumber;
                     } else {
-                        System.out.println("Duplicate phone number");
+                        System.out.println("duplicate phone number");
                     }
 
                 }
@@ -187,7 +181,7 @@ public class UpdateStaff {
             } catch (Age e) {
                 System.out.println(e.getMessage());
             } catch (Exception e) {
-                System.out.println("sai định dạng");
+                System.out.println("wrong format");
             }
         }
     }
@@ -195,7 +189,7 @@ public class UpdateStaff {
     private String getGender() {
         while (true) {
             try {
-                System.out.print("Enter gender(Male\\Female): ");
+                System.out.print("Enter your gender(Male\\Female): ");
                 String gender = scanner.nextLine();
                 if (gender.matches("Male") || gender.matches("Female") || gender.matches("nữ")) {
                     if (gender.equals("Male")) {
@@ -213,12 +207,13 @@ public class UpdateStaff {
     }
 
     private String getAddress() {
-        System.out.print("Enter the employee's address: ");
+        System.out.print("Enter employee's address: ");
         return scanner.nextLine();
     }
 
     private String getStatus() {
         while (true) {
+            System.out.println("------status------");
             System.out.println("   1. working");
             System.out.println("   2. on vacation");
             System.out.println("   3. return");
@@ -248,7 +243,7 @@ public class UpdateStaff {
     private int getHours() {
         while (true) {
             try {
-                System.out.print("Enter the number of hours worked: ");
+                System.out.print("Enter working hours: ");
                 return Integer.parseInt(scanner.nextLine());
             } catch (Exception e) {
                 System.out.println("wrong format");
@@ -257,17 +252,13 @@ public class UpdateStaff {
     }
 
     private int getId() {
-        ArrayList<Staff> listtemp1 = readFiles.readFiles("src/EmployeeStaff/staff.txt");
         while (true) {
             try {
-                System.out.print("Enter the employee id (Enter number): ");
+                System.out.print("Enter employee id (Enter number): ");
                 int id = Integer.parseInt(scanner.nextLine());
                 if (list.isEmpty()) {
                     return id;
-                } else if (id == listtemp1.get(0).getId()){
-                    return id;
-                }
-                else {
+                } else {
                     for (Staff a : list) {
                         if (a.getId() == id) {
                             throw new Id();
@@ -278,7 +269,7 @@ public class UpdateStaff {
             } catch (Id e) {
                 System.out.println(e.getMessage());
             } catch (Exception e) {
-                System.out.println("Wrong format");
+                System.out.println("wrong format");
             }
         }
     }
