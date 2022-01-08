@@ -22,7 +22,7 @@ public class Status {
         }
     }
 
-    public void checkStatus(PushAndChangeStaff manager) {
+    public void checkStatus() {
         ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
         if (list.size() == 0){
             System.out.println("list is empty");

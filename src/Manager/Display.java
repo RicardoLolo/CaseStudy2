@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Display {
     Scanner scanner = new Scanner(System.in);
-    AccountManager accountManager = new AccountManager();
     public void client() {
         while (true){
             try {

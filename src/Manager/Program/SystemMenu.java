@@ -1,7 +1,7 @@
 package Manager.Program;
 
 import EmployeeStaff.Staff;
-import IOFiles.WriteFiles;
+//import IOFiles.WriteFiles;
 import LoginPermission.UserManager;
 import Manager.Display;
 import Manager.Program.Functions.*;
@@ -13,15 +13,17 @@ public class SystemMenu {
     static PushAndChangeStaff manager = new PushAndChangeStaff();
     static ShowStaff showStaff = new ShowStaff();
     static FindByName findByName = new FindByName();
+    static Sort sort = new Sort();
     static Status status = new Status();
     static RemoveStaff removeStaff = new RemoveStaff();
     static ShowSalary showSalary = new ShowSalary();
     static UpdateStaff updateStaff = new UpdateStaff();
     static Find find = new Find();
     static Display display = new Display();
-    static WriteFiles<Staff> writeFiles = new WriteFiles<>();
+//    static WriteFiles<Staff> writeFiles = new WriteFiles<>();
 
-    private SystemMenu() {}
+    private SystemMenu() {
+    }
 
     static public void menuAdmin() {
         while (true) {
@@ -51,7 +53,6 @@ public class SystemMenu {
                             if (choose == 1) {
                                 Staff staff = manager.create("full");
                                 manager.addList(staff);
-//                                writeFiles.writeFiles("src/EmployeeStaff/staff.txt");
                                 break;
                             } else if (choose == 2) {
                                 Staff staff1 = manager.create("part");
@@ -82,7 +83,7 @@ public class SystemMenu {
                                 break;
                             }
                         case 3:
-                            status.checkStatus(manager);
+                            status.checkStatus();
                             break;
                         case 4:
                             updateStaff.updateStaff();
@@ -97,7 +98,7 @@ public class SystemMenu {
                             manager.menuSort();
                             break;
                         case 8:
-                            removeStaff.remove(manager);
+                            removeStaff.remove();
                             break;
                         case 9:
                             showSalary.menuSalary();
@@ -150,7 +151,7 @@ public class SystemMenu {
                                 break;
                             }
                         case 2:
-                            status.checkStatus(manager);
+                            status.checkStatus();
                             break;
                         case 3:
                             UserManager.MenuUser();

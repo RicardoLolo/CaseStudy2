@@ -20,7 +20,7 @@ public class RemoveStaff {
         }
     }
 
-    public void remove(PushAndChangeStaff manager) {
+    public void remove() {
         int check = -1;
         ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
         System.out.println("");
