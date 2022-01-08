@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static com.sun.tools.corba.se.idl.InterfaceState.Private;
-
 public class AccountManager {
     private static final ReadFiles<LoginManagement> readFiles = new ReadFiles<>();
     private static final WriteFiles<LoginManagement> writeFiles = new WriteFiles<>();

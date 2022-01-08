@@ -17,13 +17,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UpdateStaff {
-    private Scanner scanner = new Scanner(System.in);
-    private PushAndChangeStaff manager = new PushAndChangeStaff();
-    private ArrayList<Staff> list = manager.list;
-    private File file = new File("src/EmployeeStaff/staff.txt");
-    private PushAndChangeStaff manger = new PushAndChangeStaff();
-    private WriteFiles<Staff> writeFiles = new WriteFiles<>();
-    private ReadFiles<Staff> readFiles = new ReadFiles<>();
+    private final Scanner scanner = new Scanner(System.in);
+    private final PushAndChangeStaff manager = new PushAndChangeStaff();
+    private final ArrayList<Staff> list = manager.list;
+    private final WriteFiles<Staff> writeFiles = new WriteFiles<>();
+    private final ReadFiles<Staff> readFiles = new ReadFiles<>();
 
     private void check(int check, String a, String b) {
         if (check > 0) {
@@ -33,25 +31,25 @@ public class UpdateStaff {
         }
     }
 
-    public Staff create(String KieuNv) {
+    public Staff create(String StaffType) {
         int id = getId();
         String name = getName();
         int age = getAge();
         String gmail = getGmail();
-        String phonenumber = getPhoneNumber();
+        String phoneNumber = getPhoneNumber();
         String address = getAddress();
         String status = getStatus();
         String gender = getGender();
         double salary = getSalary();
-        if (KieuNv.equals("full")) {
-            return new StaffFullTime(id, name, gender, age, gmail, phonenumber, address, status, salary);
+        if (StaffType.equals("full")) {
+            return new StaffFullTime(id, name, gender, age, gmail, phoneNumber, address, status, salary);
         } else {
             int hours = getHours();
-            return new StaffPartTime(id, name, gender, age, gmail, phonenumber, address, status, salary, hours);
+            return new StaffPartTime(id, name, gender, age, gmail, phoneNumber, address, status, salary, hours);
         }
     }
 
-    public void updateNhanVien(PushAndChangeStaff manager) {
+    public void updateStaff() {
         ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
         if (list.size() == 0){
             System.out.println("list is empty");
@@ -92,6 +90,7 @@ public class UpdateStaff {
         }
     }
     public UpdateStaff(){
+        File file = new File("src/EmployeeStaff/staff.txt");
         if (!file.exists()){
             try {
                 file.createNewFile();

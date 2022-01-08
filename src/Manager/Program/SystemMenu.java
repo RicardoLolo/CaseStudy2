@@ -11,8 +11,6 @@ import java.util.Scanner;
 public class SystemMenu {
     static Scanner scanner = new Scanner(System.in);
     static PushAndChangeStaff manager = new PushAndChangeStaff();
-    static UserManager userManager = new UserManager();
-    static Soft soft = new Soft();
     static ShowStaff showStaff = new ShowStaff();
     static FindByName findByName = new FindByName();
     static Status status = new Status();
@@ -87,13 +85,13 @@ public class SystemMenu {
                             status.checkStatus(manager);
                             break;
                         case 4:
-                            updateStaff.updateNhanVien(manager);
+                            updateStaff.updateStaff();
                             break;
                         case 5:
                             status.editStatus(manager);
                             break;
                         case 6:
-                            showStaff.showList();
+                            ShowStaff.showList();
                             break;
                         case 7:
                             manager.menuSort();

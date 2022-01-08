@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 public class ShowStaff {
     static ReadFiles<Staff> readFiles = new ReadFiles<>();
+
+    public ShowStaff() {}
+
     public static void showList(){
         ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
         if (list.size() == 0){

@@ -15,11 +15,11 @@ public class ShowSalary {
     WriteFiles<Staff> writeFiles = new WriteFiles<>();
 
     public void menuSalary() {
-        System.out.println("   ------hiện thị lương------");
-        System.out.println("   1. hiện thị lương nhân viên FullTime");
-        System.out.println("   2. hiện thị lương nhân viên PartTime");
-        System.out.println("   3. quay lại");
-        System.out.print("   Nhập lựa chọn: ");
+        System.out.println("   ------salary display------");
+        System.out.println("   1. Full Time employee salary display");
+        System.out.println("   2. Part Time employee salary display");
+        System.out.println("   3. back");
+        System.out.print("   Enter the select : ");
         int choice = Integer.parseInt(scanner.nextLine());
         switch (choice) {
             case 1:
@@ -37,7 +37,7 @@ public class ShowSalary {
         ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
         for (Staff a : list) {
             if (a instanceof StaffFullTime) {
-                System.out.println("id:" + a.getId() + ", tên: " + ((StaffFullTime)a).getName() + ", tổng lương: " + ((StaffFullTime)a).payRoll() + " VNĐ");
+                System.out.println("id:" + a.getId() + ", tên: " + ((StaffFullTime)a).getName() + ", total salary : " + ((StaffFullTime)a).payRoll() + " VNĐ");
             }
         }
     }
@@ -46,7 +46,7 @@ public class ShowSalary {
         ArrayList<Staff> list = readFiles.readFiles("src/Manager/StaffManagement.txt");
         for (Staff a : list) {
             if (a instanceof StaffPartTime) {
-                System.out.println("id: " + a.getId() + ", tên: " +  ((StaffPartTime) a).getName() + ", tổng lương: " + ((StaffPartTime) a).payRoll() + " VNĐ");
+                System.out.println("id: " + a.getId() + ", tên: " +  ((StaffPartTime) a).getName() + ", total salary: " + ((StaffPartTime) a).payRoll() + " VNĐ");
             }
         }
     }
