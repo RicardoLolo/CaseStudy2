@@ -12,8 +12,9 @@ public class Staff implements Serializable {
     private String address;
     private String status;
     private double salary;
+    static int VALUE = 1111;
 
-    public Staff(String name, int age, String phoneNumber, String address, String gmail, String status, double salary) {
+    public Staff(int id, String name, int age, String phoneNumber, String address, String gmail, String status, double salary) {
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
@@ -21,6 +22,7 @@ public class Staff implements Serializable {
         this.gmail = gmail;
         this.status = status;
         this.salary = salary;
+        this.id = ++VALUE;
     }
 
     public int getId() {
