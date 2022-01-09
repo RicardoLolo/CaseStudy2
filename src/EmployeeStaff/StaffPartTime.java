@@ -3,7 +3,7 @@ package EmployeeStaff;
 public class StaffPartTime extends Staff {
     private int timeWorked;
 
-    public StaffPartTime(int id, String name, String gender, int age, String phoneNumber, String address, String gmail, String status, double salary, int timeWorked) {
+    public StaffPartTime( int id, String name, String gender, int age, String phoneNumber, String address, String gmail, String status, double salary, int timeWorked) {
         super(name, age, phoneNumber, address, gmail, status, salary);
         this.timeWorked = timeWorked;
     }

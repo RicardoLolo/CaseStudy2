@@ -42,7 +42,7 @@ public class UpdateStaff {
         String gender = getGender();
         double salary = getSalary();
         if (StaffType.equals("full")) {
-            return new StaffFullTime(id, name, gender, age, gmail, phoneNumber, address, status, salary);
+            return new StaffFullTime(id,name, gender, age, gmail, phoneNumber, address, status, salary);
         } else {
             int hours = getHours();
             return new StaffPartTime(id, name, gender, age, gmail, phoneNumber, address, status, salary, hours);
